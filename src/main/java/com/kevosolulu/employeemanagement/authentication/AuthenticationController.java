@@ -24,10 +24,28 @@ public class AuthenticationController {
     public User findById(@PathVariable Integer id) {
         return repository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not Found boy!"));
     }
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create-user")
-    public void createUser(@RequestBody User user) {
-        System.out.println("Hello ****************");
+    @CrossOrigin
+    public User createUser(@RequestBody User user) {
+        if(repository.existsById(user.id())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists!");
+        }
         repository.save(user);
+        return repository.findById(user.id()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("/update-user/{id}")
+    public void updateUser(@RequestBody User user, @PathVariable Integer id) {
+        if(!repository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User cannot be found!");
+        }
+        repository.save(user);
+    }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/delete-user/{id}")
+    public void deleteUserById(@PathVariable Integer id) {
+        repository.delete(id);
     }
 
 }

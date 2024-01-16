@@ -3,7 +3,9 @@ package com.kevosolulu.employeemanagement.repository;
 import com.kevosolulu.employeemanagement.model.Role;
 import com.kevosolulu.employeemanagement.model.User;
 import jakarta.annotation.PostConstruct;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +30,17 @@ public class UserCollectionRepository {
         users.add(user);
     }
     public void save(User user) {
+        users.removeIf(c->c.id().equals(user.id()));
         users.add(user);
+    }
+    public boolean existsById(Integer id) {
+        return users.stream().anyMatch(c -> c.id().equals(id));
+    }
+    public void delete (Integer id) {
+        if(users.stream().noneMatch(c->c.id().equals(id))) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        users.removeIf(c->c.id().equals(id));
     }
 
 }
