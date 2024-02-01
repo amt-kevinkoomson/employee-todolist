@@ -1,4 +1,4 @@
-package com.kevosolulu.employeemanagement.model;
+package com.kevosolulu.employeemanagement.entity;
 
 public enum Role {
     ADMIN,
