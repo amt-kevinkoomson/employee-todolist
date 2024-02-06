@@ -1,5 +1,6 @@
 package com.kevosolulu.employeemanagement.repositories;
 
+import com.kevosolulu.employeemanagement.entity.Department;
 import com.kevosolulu.employeemanagement.entity.Users;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -25,6 +27,21 @@ class UsersRepositoryTest {
                 .build();
         usersRepository.save(user);
     }
+//    @Test
+//    public void saveUserWithDepartment() {
+//        Department department = Department.builder()
+//                .code("SS2")
+//                .name("New Dept")
+//                .created_by("Sky-man")
+//                .build();
+//        Users user = Users.builder()
+//                .email("meow2@gmail.com")
+//                .password("purr")
+//                .username("nene-san")
+//                .department(department)
+//                .build();
+//        usersRepository.save(user);
+//    }
 
     @Test
     public void printAllUsers() {
@@ -33,17 +50,17 @@ class UsersRepositoryTest {
     }
     @Test
     public void printUserByEmail() {
-        List<Users> user = usersRepository.findByEmail("anay@gmail.com");
+        List<Users> user = usersRepository.findByEmail("random.me@meme.com");
         System.out.println("user = " + user);
     }
     @Test
     public void printUserByEmailContaining() {
-        List<Users> user = usersRepository.findByEmailContaining("anay");
+        List<Users> user = usersRepository.findByEmailContaining("meow");
         System.out.println("user = " + user);
     }
     @Test
-    public void printUserByUsernameNotNull() {
-        List<Users> user = usersRepository.findByPasswordNotNull("boomchakalaka");
-        System.out.println("user = " + user);
+    public void assignDepartmentToUser () {
+        Optional<Users> user = usersRepository.findById(1);
+
     }
 }

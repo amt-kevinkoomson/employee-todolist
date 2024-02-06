@@ -10,5 +10,4 @@ import java.util.List;
 public interface UsersRepository extends JpaRepository<Users, Integer> {
     List<Users> findByEmail(String email);
     List<Users> findByEmailContaining(String email);
-    List<Users> findByPasswordNotNull(String password);
 }

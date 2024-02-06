@@ -3,36 +3,33 @@ package com.kevosolulu.employeemanagement.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-import java.util.List;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Department {
+@ToString(exclude = "department")
+public class Office {
     @Id
     @SequenceGenerator(
-            name = "department_sequence",
-            sequenceName = "department_sequence",
+            name = "office_sequence",
+            sequenceName = "office_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "department_sequence"
+            generator = "office_sequence"
     )
     private Integer id;
     private String name;
-    private String created_by;
-    private Date created_at;
-    private String code;
     @OneToOne(
+            mappedBy = "office",
+            optional = false,
             cascade = CascadeType.ALL
     )
     @JoinColumn(
-            name = "office_id",
-            referencedColumnName = "id"
+            name = "department_id",
+            referencedColumnName = "office"
     )
-    private Office office;
+    private Department department;
 }
